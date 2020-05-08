@@ -1,46 +1,10 @@
-const config = require('./config');
+const config = require('../config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
-const { chatToken, videoToken, voiceToken } = require('./tokens');
-require('dotenv').config();
-const Pusher = require('pusher');
+const { chatToken, videoToken, voiceToken } = require('../tokens');
 
 const app = express();
-const port =  8080;
-const whiteboardPort = process.env.PORT || 4000;
-
-// whiteboard feature using pusher
-const pusher = new Pusher({
-    appId: process.env.PUSHER_APP_ID,
-    key: process.env.PUSHER_KEY,
-    secret: process.env.PUSHER_SECRET,
-    cluster: 'us3',
-  });
-
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended: false}));
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  });
-  
-  app.post('/paint', (req, res) => {
-      console.log(req.body);
-      pusher.trigger('painting', 'draw', req.body);
-      res.json(req.body);
-    });
-  
-  app.listen(whiteboardPort, () => {
-    console.log(`Whiteboard Server started on port ${whiteboardPort}`);
-  });
-  // end of whiteboard feature
-
-  //video server
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(pino);
@@ -101,4 +65,3 @@ app.post('/voice/token', (req, res) => {
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
 );
-
