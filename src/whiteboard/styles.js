@@ -3,12 +3,13 @@ const styles = theme => ({
         backgroundColor: "#353b48",
         color: "white",
         textAlign: "center",
-        padding: 25
+        padding: 25,
+        margin: "auto"
     },
 
     board: {
-        margin: "auto",
-        width: "60%",
+        margin: 20,
+        width: "20%",
     },
 
     button: {
