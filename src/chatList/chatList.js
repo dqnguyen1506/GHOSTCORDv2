@@ -1,152 +1,247 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import styles from "./styles";
-import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import NotificationImportant from "@material-ui/icons/NotificationImportant";
-import fire from "../config/fire";
+import React, {useContext, useState} from "react";
+import {
+    Avatar,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    makeStyles
+} from "@material-ui/core";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { GlobalContext } from "../state/State.js";
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import { AnimatedList } from 'react-animated-list';
 
-class ChatListComponent extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			curAvatar: null
-		};
-	}
+const useStyles = makeStyles((theme) => ({
+    title: {
+        color: 'black'
+    },
+}));
 
-	render() {
-		const { classes } = this.props;
 
-		if (this.props.chats.length > 0) {
-			return (
-				<div className={classes.root}>
-					<Button
-						variant="contained"
-						fullWidth
-						color="#184a46"
-						onClick={this.newChat}
-						className={classes.newChatBtn}
-					>
-						Start chat
-					</Button>
-					<List>
-						{this.props.chats.map((chat, index) => {
-							// for each chat in chats
-							// fire
-							// 	.firestore()
-							// 	.collection("users")
-							// 	.doc(
-							// 		chat.users.filter(
-							// 			user => user !== this.props.userEmail // ignore own email
-							// 		)[0]
-							// 	)
-							// 	.get()
-							// 	.then(doc => {
-							// 		this.setState({
-							// 			curAvatar: doc.data().avatar ? doc.data().avatar : null
-							// 		});
-							// 	});
-							//console.log(chat);
-							let objEmail = chat.users
-								.filter(
-									user => user !== this.props.userEmail // ignore own email
-								)[0]
-								.split("")[0];
-							var avatar = null;
-							//console.log(objEmail > fire.auth().currentUser.email);
-							if (objEmail > fire.auth().currentUser.email) {
-								avatar = chat.avatars[0].avatar2;
-								//console.log(avatar);
-							} else {
-								avatar = chat.avatars[0].avatar1;
-								//console.log(avatar);
-							}
-							//console.log(avatar[0].avatar1);
-							return (
-								<div key={index}>
-									<ListItem // create a list item
-										onClick={() => this.selectChat(index)}
-										className={classes.listItem}
-										selected={this.props.selectedChatIndex === index}
-										alignItems="flex-start"
-									>
-										<ListItemAvatar>
-											<Avatar alt="Remy Sharp" src={avatar}>
-												{
-													// find first letter of name
-													chat.users
-														.filter(
-															user => user !== this.props.userEmail // ignore own email
-														)[0]
-														.split("")[0]
-												}
-											</Avatar>
-										</ListItemAvatar>
-										<ListItemText
-											primary={
-												chat.users.filter(
-													user => user !== this.props.userEmail
-												)[0]
-											}
-											secondary={
-												<React.Fragment>
-													<Typography component="span" color="textPrimary">
-														{// display the last 26 characters of the last message
-														chat.messages[
-															chat.messages.length - 1
-														].message.substring(0, 26) + " ..."}
-													</Typography>
-												</React.Fragment>
-											}
-										/>
-										{chat.receiverHasRead === false &&
-										!this.userIsSender(chat) ? (
-											<ListItemIcon>
-												<NotificationImportant
-													className={classes.unreadMessage}
-												></NotificationImportant>
-											</ListItemIcon>
-										) : null}
-									</ListItem>
-									<Divider />
-								</div>
-							);
-						})}
-					</List>
-				</div>
-			);
-		} else {
-			// if theres no chats, just display the new chat button
-			return (
-				<div className={classes.root}>
-					<Button
-						variant="contained"
-						fullWidth
-						color="primary"
-						onClick={this.newChat}
-						className={classes.newChatBtn}
-					>
-						Create first chat
-					</Button>
-					<List></List>
-				</div>
-			);
-		}
-	}
+const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
+    const classes = useStyles();
+    const { state, dispatch } = useContext(GlobalContext);
+    const [openGroupChat, setOpenGroupChat] = useState(true);
+    const [openDirectChat, setOpenDirectChat] = useState(true);
+    const [selectedGroupChatIndex, setSelectedGroupChatIndex] = useState(null);
+    const [selectedDirectChatIndex, setSelectedDirectChatIndex] = useState(null);
+    const handleClick = (type) => () => {
+        if(type === 'groupchat'){
+            setOpenGroupChat(!openGroupChat);
+        }else{
+            setOpenDirectChat(!openDirectChat);
+        }
+    };
+    const handleListItemClick = (type,index) => {
+        if(type === 'groupchat'){
+            setSelectedGroupChatIndex(index);
+            setSelectedDirectChatIndex(null);
+        }else{
+            setSelectedDirectChatIndex(index);
+            setSelectedGroupChatIndex(null);
+        }
+    };
+    const userHasRead = chat => {
+        var hasRead = false;
+        for(var x in chat.usersHasRead){
+            if(chat.usersHasRead[x].email === state.user.email){
+                hasRead = chat.usersHasRead[x].hasRead;
+            }
+        }
+        return hasRead
+    };
 
-	userIsSender = chat =>
-		chat.messages[chat.messages.length - 1].sender === this.props.email;
+    if (chatsList.length > 0) {
+        // If the user is in at least one chat
+        var groupchats = chatsList.filter((chat) => chat.type ==='groupchat');
+        var directChats = chatsList.filter((chat) => chat.type ==='1on1');
+        return (
+            <List
+                component="nav"
+            >
+                {/* group chats */}
+                <ListItem button  onClick={handleClick("groupchat")} >
+                    <ListItemText 
+                        primary={`Group chats (${groupchats.length})`} 
+                        className={classes.title}
+                    />
+                    {openGroupChat ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openGroupChat} timeout="auto" unmountOnExit>
+                    {/* <List component="div" disablePadding>
+                        <ListItem button style={{paddingLeft: '2vw'}}>
+                            <ListItemText primary="Starred" />
+                        </ListItem>
+                    </List> */}
+                    <AnimatedList animation={"grow"}>
+                        {groupchats.map((chat, index) => {
+                                var chatType = 
+                                    chat.type === "groupchat" ? "groupchat" : "1on1";
+                                var avatar = 
+                                    chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+                                        : chat.owner;
+                                var chatName = 
+                                    chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+                                        : chat.name;
+                                // create a list item for each chat by mapping over the chatsList passed in from props
+                                return (
+                                    // create a listitem for each chat the user is in
+                                    <div key={index}>
+                                        <List component="div" disablePadding>
+                                        <ListItem
+                                            onClick={() => {
+                                                dispatch({ 
+                                                    type: "SET_SELECTED_GROUPCHATS_INDEX", 
+                                                    payload: index 
+                                                });
+                                                dispatch({ 
+                                                    type: "SET_SELECTED_DIRECTCHATS_INDEX", 
+                                                    payload: null 
+                                                });
+                                                selectFunction(chatsList.indexOf(chat));
+                                            }}
+                                            divider
+                                            button
+                                            selected={state.home.selectedGroupChatsIndex===index}
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    alt="Remy Sharp"
+                                                    src={loadedAvatars[avatar]}
+                                                >
+                                                    {/* {chatName.split("")[0]} */}
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} />
+                                            {userHasRead(chat) ? null : (
+                                                <FiberManualRecordIcon  />
+                                            )}
+                                        </ListItem>
+                                        </List>
+                                    </div>
+                                );
+                            })}
+                    </AnimatedList>
+                    {/* <List component="div" disablePadding>
+                        {console.log("LOADEDAVATARS:", loadedAvatars)}
+                        
+                    </List> */}
+                </Collapse>
 
-	newChat = () => this.props.newChatBtnFn();
+                {/* direct messages */}
+                <ListItem button onClick={handleClick("1on1")}>
+                    <ListItemText 
+                        primary={`Direct Messages (${directChats.length})`} 
+                        className={classes.title}    
+                    />
+                    {openDirectChat ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openDirectChat} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        {console.log("LOADEDAVATARS:", loadedAvatars)}
 
-	selectChat = index => this.props.selectChatFn(index);
-}
+                        {directChats.map((chat, index) => {
+                            var chatType = 
+                                chat.type === "groupchat" ? "groupchat" : "1on1";
+                            var avatar = 
+                                chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+                                    : chat.owner;
+                            var chatName = 
+                                chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+                                    : chat.name;
+                            // create a list item for each chat by mapping over the chatsList passed in from props
+                            return (
+                                // create a listitem for each chat the user is in
+                                <div key={index}>
+                                    <ListItem
+                                        onClick={() => {
+                                            dispatch({ 
+                                                type: "SET_SELECTED_DIRECTCHATS_INDEX", 
+                                                payload: index 
+                                            });
+                                            dispatch({ 
+                                                type: "SET_SELECTED_GROUPCHATS_INDEX", 
+                                                payload: null 
+                                            });
+                                            selectFunction(chatsList.indexOf(chat));
+                                        }}
+                                        divider
+                                        button
+                                        selected={state.home.selectedDirectChatsIndex===index}
+                                    >
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt="Remy Sharp"
+                                                src={loadedAvatars[avatar]}
+                                            >
+                                                {/* {chatName.split("")[0]} */}
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} />
+                                        {userHasRead(chat) ? null : (
+                                            <FiberManualRecordIcon  />
+                                        )}
+                                    </ListItem>
+                                </div>
+                            );
+                        })}
+                    </List>
+                </Collapse>
+            </List>
 
-export default withStyles(styles)(ChatListComponent);
+
+            // <List>
+            //     {console.log("LOADEDAVATARS:", loadedAvatars)}
+
+            //     {chatsList.map((chat, index) => {
+            //         var chatType = 
+            //             chat.type === "groupchat" ? "groupchat" : "1on1";
+            //         var avatar = 
+            //             chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+            //                 : chat.owner;
+            //         var chatName = 
+            //             chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
+            //                 : chat.name;
+            //         // create a list item for each chat by mapping over the chatsList passed in from props
+            //         return (
+            //             // create a listitem for each chat the user is in
+            //             <div key={index}>
+            //                 <ListItem
+            //                     onClick={() => {
+            //                         selectFunction(index);
+            //                        }
+            //                     }
+            //                     divider
+            //                     button
+            //                     selected={state.home.selectedChat===index}
+            //                 >
+            //                     <ListItemAvatar>
+            //                         <Avatar
+            //                             alt="Remy Sharp"
+            //                             src={loadedAvatars[avatar]}
+            //                         >
+            //                             {/* {chatName.split("")[0]} */}
+            //                         </Avatar>
+            //                     </ListItemAvatar>
+            //                     <ListItemText primary={chatName} secondary={chatType} />
+            //                     {userHasRead(chat) ? null : (
+            //                         <FiberManualRecordIcon  />
+            //                     )}
+            //                 </ListItem>
+            //             </div>
+            //         );
+            //     })}
+            // </List>
+        );
+    } else {
+        // If the user is not in any chats
+        return (
+            <div style={{ textAlign: "center" }}>You have no chatrooms!</div>
+        );
+    }
+};
+
+export default ChatsListComponent;

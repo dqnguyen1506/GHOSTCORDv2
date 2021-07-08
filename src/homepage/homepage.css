@@ -10,10 +10,11 @@
     height: 100vh;
     display: flex;
     color: white;
+    overflow: hidden;
   }
   
   .App__Aside {
-    width: 45%;
+    width: 45vw;
     background-color: #184a46;
     Display: flex;
     Align-Items: center;
@@ -21,10 +22,10 @@
   }
   
   .App__Form {
-    width: 55%;
+    width: 55vw;
     background-color: white;
-    padding: 25px 40px;
-    overflow: auto;
+    padding: 25px 1vw;
+    overflow: hidden;
   }
   
   .PageSwitcher {
@@ -125,7 +126,7 @@
     text-decoration: none;
     display: inline-block;
     padding-bottom: 2px;
-    margin-left: 5px;
+    /* margin-left: 5px; */
   }
 
 .social_button {

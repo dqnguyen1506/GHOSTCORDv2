@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import fire from "../config/fire";
+import { BrowserRouter as Route } from 'react-router-dom';
 
 class SignUpForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: null,
             name: null,
@@ -140,15 +141,16 @@ class SignUpForm extends Component {
         }
     };
 
-    submitSignup = (e) => {
+    submitSignup = async (e) => {
         this.setState({ signupError: "" });
         e.preventDefault();
+        await this.props.setLoading(true);
         if (!this.passwordsMatch()) {
             this.setState({ signupError: "Passwords do not match!" });
             return;
         }
 
-        fire.auth()
+        await fire.auth()
             .createUserWithEmailAndPassword(
                 this.state.email,
                 this.state.password
@@ -168,7 +170,7 @@ class SignUpForm extends Component {
                         .set(userObj)
                         .then(
                             () => {
-                                this.props.history.push("/dashboard");
+                                return(<Route path="/dashboard"/>)
                             },
                             (dbError) => {
                                 console.log(dbError);
@@ -182,6 +184,7 @@ class SignUpForm extends Component {
                 },
                 (authError) => {
                     console.log(authError);
+                    this.props.setLoading(false);
                     this.setState({ signupError: authError.message });
                 }
             );

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { FacebookLoginButton } from "react-social-login-buttons";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { InstagramLoginButton } from "react-social-login-buttons";
@@ -6,6 +6,10 @@ import { TwitterLoginButton } from "react-social-login-buttons";
 import fire from "../config/fire";
 import firebase from "firebase/app";
 import {AppString} from './../Const'
+import BeatLoader from "react-spinners/BeatLoader";
+import { css } from "@emotion/react";
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+
 class LoginForm extends Component{
 
     constructor() {
@@ -16,10 +20,16 @@ class LoginForm extends Component{
 			auth_type: 'reauthenticate'
 		});
 		this.provider3 = new firebase.auth.TwitterAuthProvider();
+		this.override = css`
+			display: block;
+			margin: 0 auto;
+			border-color: red;
+		`;
 		this.state = {
 			email: null,
 			password: null,
-			serverError: false
+			serverError: false,
+			loading: false
 		};
     }
     
@@ -27,7 +37,15 @@ class LoginForm extends Component{
         return(
             <div className="FormCenter">
                 <form className="FormFields" onSubmit={e => this.submitLogin(e)}>
-
+				{/* <div style={{
+                    position: 'fixed',
+                    top: '17vh',
+                    left: '3vw',
+                    transform: 'translate(-50%, -50%)'
+                	}}
+            	>
+                	<BeatLoader color='#184A46' loading={this.state.loading} css={this.override} size={15} />
+				</div> */}
                     <div className="FormField">
                         <label className="FormField__Label" htmlFor="signup-email-input">Email</label>
                         <input 
@@ -74,7 +92,6 @@ class LoginForm extends Component{
 								</FacebookLoginButton>
 								<TwitterLoginButton 
 									onClick={() => this.twitterLogin()}
-		
 								><span></span>
 								</TwitterLoginButton>
 				</div>
@@ -109,7 +126,8 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							this.props.history.push("/dashboard");
+							// this.props.history.push("/dashboard");
+							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
 							console.log(dbError);
@@ -137,7 +155,8 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							this.props.history.push("/dashboard");
+							// this.props.history.push("/dashboard");
+							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
 							console.log(dbError);
@@ -171,7 +190,8 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							this.props.history.push("/dashboard");
+							// this.props.history.push("/dashboard");
+							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
 							console.log(dbError);
@@ -187,19 +207,24 @@ class LoginForm extends Component{
 
 	submitLogin = async e => {
 		e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
-
+		// this.setState({ loading: true });
+		await this.props.setLoading(true);
 		await fire
 			.auth()
 			.signInWithEmailAndPassword(this.state.email, this.state.password)
 			.then(
 				() => {
-					this.props.history.push("/dashboard");
+					// this.props.history.push("/dashboard");
+					return(<Route path="/dashboard"/>)
 				},
 				err => {
+					// this.setState({ loading: false });
+					this.props.setLoading(false);
 					this.setState({ serverError: true });
 					console.log("Error logging in: ", err);
 				}
 			);
+
 	};
 }
 

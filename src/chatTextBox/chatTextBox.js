@@ -35,16 +35,6 @@ class ChatTextBoxComponent extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.chatTextBoxContainer}>
-				{/* Stickers */}
-                {this.state.isShowSticker ? this.renderStickers() : null}
-				<input
-                    accept="image/*"
-                    className={classes.input}
-                    id="icon-button-photo"
-                    onChange={this.onChoosePhoto}
-					type="file"
-					style={{ display: 'none', }}
-                />
                 <label htmlFor="icon-button-photo">
                     <IconButton color="primary" component="span">
                         <PhotoCamera />
@@ -77,69 +67,6 @@ class ChatTextBoxComponent extends React.Component {
 			</div>
 		);
 	}
-	openListSticker = () => {
-        this.setState({isShowSticker: !this.state.isShowSticker})
-    }
-	renderStickers = () => {
-        return (
-            <div className="viewStickers">
-                <img
-                    className="imgSticker"
-                    src={images.mimi1}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi1', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi2}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi2', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi3}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi3', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi4}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi4', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi5}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi5', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi6}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi6', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi7}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi7', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi8}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi8', 2)}
-                />
-                <img
-                    className="imgSticker"
-                    src={images.mimi9}
-                    alt="sticker"
-                    onClick={() => this.onSendMessage('mimi9', 2)}
-                />
-            </div>
-        )
-    }
 	userTyping = e =>
 		e.keyCode === 13
 			? this.submitMessage()

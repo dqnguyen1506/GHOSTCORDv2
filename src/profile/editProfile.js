@@ -7,6 +7,9 @@ import NavBarComponent from "../navBar/navBar";
 import styles from './styles';
 import withStyles from "@material-ui/core/styles/withStyles";
 import "./profile.css";
+import {
+    Slide,
+} from "@material-ui/core";
 
 class EditProfileComponent extends Component {
 
@@ -19,7 +22,7 @@ class EditProfileComponent extends Component {
 			url: "",
 			user: "",
 			name: "",
-			avatar: ""
+			avatar: "",
 		};
 
 		this.userTyping = this.userTyping.bind(this);
@@ -30,29 +33,33 @@ class EditProfileComponent extends Component {
 		const { classes } = this.props;
 
         return (
-			<div>
+			<div style={{overflow: 'hidden'}}>
 				<NavBarComponent />
 				<div style = {{paddingTop: "10%"}}>
-					
 				</div>
 				<main className={classes.main}>
 					<CssBaseline />
 					<Paper className={classes.paper}>
-						<Typography component="h1" variant="h5">
-							Edit Page
-						</Typography>
+						<Slide timeout={{enter: '500ms'}} direction="down" in={true} mountOnEnter unmountOnExit>
+							<Typography component="h1" variant="h5">
+								Edit Page
+							</Typography>
+						</Slide>
 						<form className={classes.form}>
-							<FormControl fullwidth margin="normal">
-								<InputLabel htmlFor="edit-name">
-									Edit Name
-								</InputLabel>	
-								<Input
-									id="edit-name" 
-									placeholder={this.state.user.name}
-									onChange={ e => {this.userTyping("name", e);}}
-								></Input>
-							</FormControl>
-							<FormControl fullwidth margin="normal">
+							<Slide timeout={{enter: '500ms'}} direction="left" in={true} mountOnEnter unmountOnExit>
+								<FormControl fullwidth margin="normal">
+									<InputLabel htmlFor="edit-name">
+										Edit Name
+									</InputLabel>	
+									<Input
+										id="edit-name" 
+										placeholder={this.state.user.name}
+										onChange={ e => {this.userTyping("name", e);}}
+									></Input>
+								</FormControl>
+							</Slide>
+							<Slide timeout={{enter: '500ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
+								<FormControl fullwidth margin="normal">
 								<InputLabel htmlFor="edit-avatar">
 									Edit Avatar
 								</InputLabel>
@@ -61,29 +68,34 @@ class EditProfileComponent extends Component {
 									type="file" 
 									onChange={ e => {this.userTyping("avatar", e)}}
 								></Input>
-							</FormControl>	
+								</FormControl>	
+							</Slide>
+							
 							<br/>
-							<div className="buttons">
-								<button 
-									variant="contained" 
-									color="primary" 
-									type="submit" 
-									fullWidth
-									onClick={this.update}
-									className={classes.submit}
-								>
-									Save
-								</button>	
-								<button 
-									variant="contained" 
-									color="secondary" 
-									fullWidth
-									onClick={() => this.props.history.push("/profile")}
-									className={classes.submit}
-								>
-									Cancel
-								</button>
-							</div>
+							<Slide timeout={{enter: '500ms'}} direction="up" in={true} mountOnEnter unmountOnExit>
+								<div className="buttons">
+									<button 
+										variant="contained" 
+										color="primary" 
+										type="submit" 
+										fullWidth
+										onClick={this.update}
+										className={classes.submit}
+									>
+										Save
+									</button>	
+									<button 
+										variant="contained" 
+										color="secondary" 
+										fullWidth
+										onClick={() => this.props.history.push("/profile")}
+										className={classes.submit}
+									>
+										Cancel
+									</button>
+								</div>
+							</Slide>
+							
 						</form>
 					</Paper>
 				</main>

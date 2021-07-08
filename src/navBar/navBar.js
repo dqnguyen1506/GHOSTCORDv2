@@ -1,20 +1,27 @@
-import React, { Component } from "react";
+import React, {useContext, useState , Component} from "react";
+import firebase from "firebase/app";
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
 import clsx from "clsx";
+import {
+    Drawer,
+    AppBar,
+    Toolbar,
+    CssBaseline,
+    List,
+    Typography,
+    Divider,
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    Badge,
+    ListItemText,
+    Grid
+} from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
 import GestureIcon from "@material-ui/icons/Gesture";
@@ -22,13 +29,16 @@ import PeopleIcon from "@material-ui/icons/People";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link, withRouter } from "react-router-dom";
-import fire from "../config/fire";
+import fire , {firestore} from "../config/fire";
+import { GlobalContext } from "../state/State";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
+        width: '100vw',
+        height: '7vh'
     },
     appBar: {
         transition: theme.transitions.create(["margin", "width"], {
@@ -89,13 +99,101 @@ const useStyles = makeStyles((theme) => ({
             color: "#184a46",
         },
     },
+    logo:{
+        marginLeft: '1%'
+    }
 }));
 
-export default function PersistentDrawerRight({ history }) {
+export default function PersistentDrawerRight({ history}) {
     // class navBar extends Component {
     //     render(){
-    const signOut = () => {
+    const { state, dispatch } = useContext(GlobalContext);
+    const [loading, setLoading] = useState(false);
+    const [color, setColor] = useState("#ffffff");
+    /* update user status to offline when signed out */
+    const updateStatus = async () => {
+        var usersRef = await firestore.collection("users").doc(state.user.email)
+        var batch = await firestore.batch();
+
+        await batch.update(usersRef, {
+            status: "online"
+        });
+        await batch.update(usersRef, {
+            status: "offline"
+        });
+        await batch.commit()
+            .then(() => console.log('Success!'))
+            .catch(err => console.error('Failed!', err));
+    };
+    /* update chatIsSelected (to false) when signed out*/
+    const updateChatIsSelected = async () => {
+        if(state.home.selectedChat != null){
+            var chatsRef = await firestore.collection("chats").doc(state.home.chats[state.home.selectedChat].id);
+            var batch = await firestore.batch();
+            await batch.update(chatsRef, {
+                usersHasRead: firebase.firestore.FieldValue.arrayRemove({
+                    email: state.user.email, hasRead: true, chatIsSelected: true})
+            });
+            await batch.update(chatsRef, {
+                usersHasRead: firebase.firestore.FieldValue.arrayUnion({
+                    email: state.user.email, hasRead: true, chatIsSelected: false})
+            });
+            await batch.commit()
+                .then(() => console.log('Success!'))
+                .catch(err => console.error('Failed!', err));
+        };
+    };
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: red;
+    `;
+    const signOut = async e => {
+        e.preventDefault();
+        await dispatch({
+            type: "SET_LOADING",
+            payload: true,
+        });
+        await updateStatus();
+        await updateChatIsSelected();
+        await dispatch({ type: "SET_SELECTED_GROUPCHATS_INDEX", payload: null });
+        await dispatch({ type: "SET_SELECTED_DIRECTCHATS_INDEX", payload: null });
+        await dispatch({ type: "SET_SELECTED_CHAT", payload: null });
+        await dispatch({
+            type: "SET_CHAT_INVITE_COUNT",
+            payload: 0,
+        });
+        await dispatch({
+            type: "SET_CHATS",
+            payload: [],
+        });
         fire.auth().signOut();
+        if(state.display.showAlert === true){
+            await dispatch({
+                type: "SET_SHOW_ALERT",
+                payload: false,
+            });
+        };
+        if(state.alert.type !== 'logged out'){
+            await dispatch({
+                type: "SET_ALERT_TYPE",
+                payload: 'logged out',
+            });
+        };
+        if(state.alert.message !== 'Log out success.'){
+            await dispatch({
+                type: "SET_ALERT_MESSAGE",
+                payload: 'Log out success.',
+            });
+        };
+        await dispatch({
+            type: "SET_SHOW_ALERT",
+            payload: true,
+        });
+        await dispatch({
+            type: "SET_LOADING",
+            payload: false,
+        });
         history.push("/login");
     };
 
@@ -119,8 +217,48 @@ export default function PersistentDrawerRight({ history }) {
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
+                style={{
+                    height:'auto',
+                    // minHeight:50,
+                    display: "flex",
+                    flexDirection: "column",
+                    flexShrink: 0
+                }}
             >
-                <Toolbar>
+                <Grid
+                    container
+                    direction='row'
+                    // justify='space-between'
+                    alignItems='center'
+                    style={{margin:'auto'}}
+                >
+                    <Link
+                            variant="h9"
+                            className={classes.title}
+                            to="/dashboard"
+                    >
+                            <img
+                                height="50px"
+                                width="50px"
+                                src={require("../logo/logo.png")}
+                                alt="Ghostcord"
+                                className={classes.logo}
+                            />
+                    </Link>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        // edge="end"
+                        onClick={handleDrawerOpen}
+                        className={clsx(open && classes.hide)}
+                    >
+                        <Badge badgeContent={state.home.friendRequestsCount} color="secondary">
+                            <MenuIcon />
+                        </Badge>
+                        
+                    </IconButton>
+                </Grid>
+                {/* <Toolbar>
                     <Typography variant="h6" noWrap className={classes.title}>
                         <Link
                             variant="h9"
@@ -143,9 +281,12 @@ export default function PersistentDrawerRight({ history }) {
                         onClick={handleDrawerOpen}
                         className={clsx(open && classes.hide)}
                     >
-                        <MenuIcon />
+                        <Badge badgeContent={state.home.friendRequestsCount} color="secondary">
+                            <MenuIcon />
+                        </Badge>
+                        
                     </IconButton>
-                </Toolbar>
+                </Toolbar> */}
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -167,84 +308,58 @@ export default function PersistentDrawerRight({ history }) {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem>
+                    <ListItem button component={ Link } to="/video" variant="contained" color="primary">
                         <ListItemIcon>
                             <VideoCallIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            <Link
-                                variant="h9"
-                                className={classes.link}
-                                to="/video"
-                            >
-                                Video
-                            </Link>
+                            Video
                         </ListItemText>
                     </ListItem>
-                    <ListItem>
+                    <ListItem button component={ Link } to="/whiteboard" variant="contained" color="primary">
                         <ListItemIcon>
                             <GestureIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            <Link
-                                variant="h9"
-                                className={classes.link}
-                                to="/whiteboard"
-                            >
-                                Whiteboard
-                            </Link>
+                            Whiteboard
                         </ListItemText>
                     </ListItem>
-                    <ListItem>
+                    <ListItem button component={ Link } to="/friends" variant="contained" color="primary">
                         <ListItemIcon>
+                        <Badge badgeContent={state.home.friendRequestsCount} color="secondary">
                             <PeopleIcon />
+                        </Badge>
+                            
                         </ListItemIcon>
-                        <ListItemText>
-                            <Link
-                                variant="h9"
-                                className={classes.link}
-                                to="/friends"
-                            >
-                                Friends
-                            </Link>
+                        <ListItemText>   
+                            Friends
                         </ListItemText>
                     </ListItem>
                 </List>
                 <Divider />
                 <List>
-                    <ListItem>
+                    <ListItem button component={ Link } to="/profile" variant="contained" color="primary">
                         <ListItemIcon>
                             <AccountCircleIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            <Link
-                                variant="h9"
-                                className={classes.link}
-                                to="/profile"
-                            >
-                                Profile
-                            </Link>
+                            Profile
                         </ListItemText>
                     </ListItem>
-                    <ListItem>
+                    <ListItem button component={ Link } to="/about" variant="contained" color="primary">
                         <ListItemIcon>
                             <InfoIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            <Link
-                                variant="h9"
-                                className={classes.link}
-                                to="/about"
-                            >
-                                About
-                            </Link>
+                            About
                         </ListItemText>
                     </ListItem>
-                    <ListItem onClick={() => signOut()}>
+                    <Divider />
+                    <ListItem button onClick={e => signOut(e)}>
                         <ListItemIcon>
-                            <ExitToAppIcon />
+                            <ExitToAppIcon style={{fill:"red"}} />
                         </ListItemIcon>
-                        <ListItemText>Logout</ListItemText>
+                        <ListItemText style={{color: "red"}}>Logout</ListItemText>
                     </ListItem>
                 </List>
             </Drawer>

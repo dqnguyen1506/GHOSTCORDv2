@@ -6,6 +6,7 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import Button from '@material-ui/core/Button';
 import fire from "../config/fire";
 
+
 class ChatViewComponent extends React.Component {
 	constructor(props){
 		super(props)
@@ -36,6 +37,7 @@ class ChatViewComponent extends React.Component {
 			return (
 				<div>
 					<div className={classes.chatHeader}>
+						
 						{/* <Avatar alt="Remy Sharp">
 							{
 								// find first letter of name
@@ -46,8 +48,7 @@ class ChatViewComponent extends React.Component {
 									.split("")[0]
 							}
 						</Avatar> */}
-						
-						{this.name}
+
 						{/*
 						<div className={classes.avatar}>
 							<ExampleComponent
@@ -66,7 +67,7 @@ class ChatViewComponent extends React.Component {
 							return (
 								<div>
 									<div
-									key={index}
+										key={index}
 										className={
 											// if user sent it give it user sent class, and otherwise for friend
 											msg.sender === this.props.userEmail
