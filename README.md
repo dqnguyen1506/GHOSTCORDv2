@@ -2,7 +2,9 @@
 
 Ghostcord is a Messaging chat web application run on react.js, express.js, firebase, and twilio api. 
 
-# Features
+## Features
+
+*Animations
 
 Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53fb.web.app/)
 
