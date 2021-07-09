@@ -56,7 +56,7 @@ Node.js, NPM, React
     1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, and
            user profile functionalities added
 
-==> [CHECK IT OUT](https://github.com/henrymhong/ghostcord)
+==> [GITHUB](https://github.com/henrymhong/ghostcord)
     
     2.0.0: UI overhaul on all pages, Direct message, animations, notifications, user status, 
            and chat information functionalities added 
