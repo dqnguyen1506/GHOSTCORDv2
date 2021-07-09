@@ -37,9 +37,12 @@ Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53
 Stack: React, Firebase
 Third-party component: Material-UI
 
-Required downloads: Node.js, NPM, React
+### Required Downloads
 
-Setup for GHOSTCORD:
+Node.js, NPM, React
+
+### Setup For GHOSTCORD
+
 1. First clone the given repo 
 2. `cd /GHOSTCORD`
 3. `npm install` to install all dependencies used in project
