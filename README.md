@@ -34,8 +34,8 @@ Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53
 
 ### Technologies and Software Used:
 
-Stack: React, Firebase
-Third-party component: Material-UI
+* Stack: React, Firebase
+* Third-party component: Material-UI
 
 ### Required Downloads
 
