@@ -21,8 +21,7 @@ and start developing for GHOSTCORD
 1. First clone the given repo 
 2. `cd /GHOSTCORD`
 3. `npm install` to install all dependencies used in project
-4. `npm run server` to start localhost video and whiteboard servers
-5. `yarn start`
+5. `yarn start` or `npm start`
 6. from here a chrome browser should pop up and allow you to see website
     - in addition it will make changes and reload automatically
     - to test open console (inspect)
