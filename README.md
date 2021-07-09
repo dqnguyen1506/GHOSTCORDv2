@@ -51,6 +51,8 @@ Setup for GHOSTCORD:
 
 ## Versions:
     1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, user profile 
+
 ==> [CHECK IT OUT] (https://github.com/henrymhong/ghostcord)
+    
     2.0.0: UI overhaul on all pages,
     
