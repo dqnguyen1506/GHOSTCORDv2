@@ -32,7 +32,7 @@ Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53
 
 ## Developer Guide
 
-Technologies and Software used:
+### Technologies and Software used:
 
 Stack: React, Firebase
 Third-party component: Material-UI
