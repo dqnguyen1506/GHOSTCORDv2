@@ -1,8 +1,10 @@
 # GHOSTCORD
 
-Ghostcord is a Video and Messaging chat web application run on react.js, express.js, firebase, and twilio api. We have features including whiteboard drawing, video and voice chat (up to 50 people), and group messaging.
+Ghostcord is a Messaging chat web application run on react.js, express.js, firebase, and twilio api. 
 
-Check out our deployed website at [https://test-f53fb.web.app/](https://test-f53fb.web.app/)
+# Features
+
+Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53fb.web.app/)
 
 (DISCLAIMER : Video chat currently disabled: twilio api does not allow deployed website to run video chat)
 
