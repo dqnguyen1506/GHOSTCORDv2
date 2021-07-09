@@ -1,6 +1,6 @@
 # GHOSTCORD
 
-Ghostcord is a Messaging chat web application run on react.js, express.js, firebase, and twilio api. 
+Ghostcord is a Messaging chat web application run on react.js, express.js, firebase, and twilio api. It is a small project that my friends and I had orginally developed (link to GHOSTCORD v1.0 at the bottom). I decided to continue building the application and had made several big changes to it, including new UIs, and many new features. 
 
 ## Features
 
@@ -50,9 +50,15 @@ Setup for GHOSTCORD:
 
 
 ## Versions:
-    1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, user profile 
+    1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, and user profile functionalities added
 
 ==> [CHECK IT OUT] (https://github.com/henrymhong/ghostcord)
     
-    2.0.0: UI overhaul on all pages,
+    2.0.0: UI overhaul on all pages, Direct message, animations, notifications, user status, and chat information functionalities added 
+    2.0.1: emojis added
+    
+## Future Features to Be Added
+1. message seen/read
+2. last active
+3. re-integrate video calls using another api
     
