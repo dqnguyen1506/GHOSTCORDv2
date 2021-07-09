@@ -60,7 +60,7 @@ Node.js, NPM, React
     
     2.0.0: UI overhaul on all pages, Direct message, animations, notifications, user status, 
            and chat information functionalities added 
-    2.0.1: emojis added
+    2.0.1: Emojis added
     
 ## Future Features to Be Added
 1. message seen/read
