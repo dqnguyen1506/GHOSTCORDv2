@@ -50,15 +50,7 @@ Setup for GHOSTCORD:
 
 
 ## Versions:
-    1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, user profile ==> check it out: 
+    1.0.0: Basic chat system (send messages and photos), add/remove friends, group chat, user profile ==> CHECK IT OUT: [https://github.com/henrymhong/ghostcord] (https://github.com/henrymhong/ghostcord)
     
     2.0.0: UI overhaul on all pages,
     
-    
-Main Contributers:
-- https://github.com/mattszeto
-- https://github.com/henrymhong
-- https://github.com/Dev-Steven
-- https://github.com/dqnguyen1506
-
-==Copyright of 4Asians==
