@@ -4,7 +4,25 @@ Ghostcord is a Messaging chat web application run on react.js, express.js, fireb
 
 ## Features
 
-*Animations
+* Animations
+    * Login/logout
+    * Upload files
+    * Homepage
+    * etc.
+* Real-time Chat System
+    * Group chat
+    * Direct Message
+    * Sending messages, photos/files, and emojis
+* User Status (Online/Offline)
+* User Profile
+    * Change username/email
+* Friend System 
+    * Add/remove friend 
+    * Direct Message with friends
+* Notifications
+    * New Messages
+    * New friend requests
+    * New Group chat invites
 
 Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53fb.web.app/)
 
