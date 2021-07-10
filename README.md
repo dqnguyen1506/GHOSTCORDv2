@@ -26,7 +26,7 @@ Ghostcord is a Messaging chat web application run on react.js, express.js, fireb
     * New friend requests
     * New Group chat invites
 * Video Chat
-   *currently does not work properly as twillio api does not allow deployed website to run video chat*
+   * *currently does not work properly as twillio api does not allow deployed website to run video chat*
    
 Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53fb.web.app/)
 
