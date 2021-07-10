@@ -70,7 +70,7 @@ Node.js, NPM, React
     2.0.1: Emojis added
     
 ## Future Features to Be Added
-1. message seen/read
-2. last active
-3. re-integrate video calls using another api
+1. Message seen/read
+2. Last active
+3. Re-integrate video calls using another api
     
