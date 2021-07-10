@@ -54,7 +54,9 @@ Node.js, NPM, React
 ## Previews:
 
 ![giphy](https://user-images.githubusercontent.com/44854519/125171100-3579fc00-e167-11eb-83f3-cb42ab29d202.gif)
+
 ![homepage animation](https://user-images.githubusercontent.com/44854519/125171106-40349100-e167-11eb-9552-85ed6aff4366.gif)
+
 ![upload animation](https://user-images.githubusercontent.com/44854519/125171111-4a568f80-e167-11eb-99db-e0a743ae7d29.gif)
 
 ## Versions:
