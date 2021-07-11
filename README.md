@@ -41,7 +41,7 @@ Check out the deployed website at [https://test-f53fb.web.app/](https://test-f53
 
 Node.js, NPM, React
 
-### Setup For GHOSTCORD
+### Setup 
 
 1. First clone the given repo 
 2. `cd /GHOSTCORD`
