@@ -1,4 +1,4 @@
-# GHOSTCORD
+# GHOSTCORDv2
 
 Ghostcord is a Messaging chat web application run on react.js, express.js, firebase, and twilio api. It is a small project that my friends and I had orginally developed (link to GHOSTCORD v1.0 at the bottom). I decided to continue building the application and had made several big changes to it, including new UIs, and many new features. 
 
