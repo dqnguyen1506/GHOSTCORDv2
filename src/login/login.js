@@ -199,7 +199,7 @@ class LoginForm extends Component{
 					);
 				}
 				else{
-					this.props.history.push("/dashboard");
+					return(<Route path="/dashboard"/>)
 				}
 				
 			});
