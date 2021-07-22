@@ -276,7 +276,7 @@ const FriendsComponent = ({ history }) => {
                                         }}
                                         label="Search for users..."
                                         value={search}
-                                        style = {{width:'50%', marginTop:"1%"}}
+                                        style = {{width:'50%'}}
                                         variant = 'outlined'
                                     />
                                 {/* </Slide> */}
