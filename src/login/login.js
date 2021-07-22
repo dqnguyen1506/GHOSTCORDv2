@@ -14,12 +14,14 @@ class LoginForm extends Component{
 
     constructor() {
 		super();
-		this.provider = new firebase.auth.GoogleAuthProvider();
-		this.provider2 = new firebase.auth.FacebookAuthProvider();
+		// authentication providers
+		this.provider = new firebase.auth.GoogleAuthProvider();			//Google
+		this.provider2 = new firebase.auth.FacebookAuthProvider();		//Facebook
+		// make sure Facebook re-authenticate users when re-signing
 		this.provider2.setCustomParameters({
 			auth_type: 'reauthenticate'
 		});
-		this.provider3 = new firebase.auth.TwitterAuthProvider();
+		this.provider3 = new firebase.auth.TwitterAuthProvider();		//Twitter
 		this.override = css`
 			display: block;
 			margin: 0 auto;
@@ -46,6 +48,7 @@ class LoginForm extends Component{
             	>
                 	<BeatLoader color='#184A46' loading={this.state.loading} css={this.override} size={15} />
 				</div> */}
+					{/* login form */}
                     <div className="FormField">
                         <label className="FormField__Label" htmlFor="signup-email-input">Email</label>
                         <input 
@@ -68,36 +71,41 @@ class LoginForm extends Component{
                             this.userTyping("password", e);
                         }}/>
                     </div>
-
+					{/* login button */}
                     <div className="FormField">
                         <button className="FormField__Button">Login</button>
                     </div>
 
                 </form>
+				{/* if there is a sign-in error, return error */}
                 {this.state.serverError ? (
-						<h5
+					<h5
                         className="txt_error"
-                        >Incorrect Information</h5>
+                    >Incorrect Information
+					</h5>
 					) : null}
-
+				{/* social buttons */}
                 <div className="social_button">
-								<GoogleLoginButton
-									onClick={() => this.googleLogin()}
-									
-								><span></span></GoogleLoginButton>
-								<FacebookLoginButton 
-									onClick={() => this.fbLogin()}
-									
-								><span></span>
-								</FacebookLoginButton>
-								<TwitterLoginButton 
-									onClick={() => this.twitterLogin()}
-								><span></span>
-								</TwitterLoginButton>
+					<GoogleLoginButton
+						onClick={() => this.googleLogin()}
+					>
+						<span></span>
+						</GoogleLoginButton>
+						<FacebookLoginButton 
+							onClick={() => this.fbLogin()}
+						>
+							<span></span>
+						</FacebookLoginButton>
+						<TwitterLoginButton 
+							onClick={() => this.twitterLogin()}
+						>
+							<span></span>
+						</TwitterLoginButton>
 				</div>
             </div>
         )
     }
+	// upon typing, set values for email & password
     userTyping = (type, event) => {
 		switch (type) {
 			case "email":
@@ -110,15 +118,18 @@ class LoginForm extends Component{
 				break;
 		}
 	};
+	// facebook login method
 	fbLogin = () =>{
 		fire
 			.auth()
 			.signInWithPopup(this.provider2)
+			// if sign-in successful
 			.then(res => {
 				const userObj = {
 					email: res.user.email,
 					name: res.user.displayName
 				};
+				// save user email & username into firestore
 				fire
 					.firestore()
 					.collection("users")
@@ -126,7 +137,7 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							// this.props.history.push("/dashboard");
+							// re-direct to homepage
 							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
@@ -139,6 +150,7 @@ class LoginForm extends Component{
 				this.props.history.push("/dashboard");
 			});
 	}
+	// twitter login method
 	twitterLogin = () =>{
 		fire
 			.auth()
@@ -148,6 +160,8 @@ class LoginForm extends Component{
 					email: res.user.email,
 					name: res.user.displayName
 				};
+				////if new user
+				//save user information acquired from Google to Firebase
 				fire
 					.firestore()
 					.collection("users")
@@ -155,7 +169,7 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							// this.props.history.push("/dashboard");
+							//redirect to homepage
 							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
@@ -165,6 +179,7 @@ class LoginForm extends Component{
 				this.props.history.push("/dashboard");
 			});
 	}
+	// google login method
 	googleLogin = () => {
 		fire
 			.auth()
@@ -190,7 +205,7 @@ class LoginForm extends Component{
 					.set(userObj)
 					.then(
 						() => {
-							// this.props.history.push("/dashboard");
+							//redirect to homepage
 							return(<Route path="/dashboard"/>)
 						},
 						dbError => {
@@ -204,21 +219,23 @@ class LoginForm extends Component{
 				
 			});
 	};
-
+	// sign-in by pressing the login button 
 	submitLogin = async e => {
-		e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
-		// this.setState({ loading: true });
+		// This is to prevent the automatic refreshing of the page on submit.
+		e.preventDefault(); 
+		// start loading animation
 		await this.props.setLoading(true);
+		// authenticate user with enterred email & password
 		await fire
 			.auth()
 			.signInWithEmailAndPassword(this.state.email, this.state.password)
 			.then(
 				() => {
-					// this.props.history.push("/dashboard");
+					//re-direct to homepage if information is correct
 					return(<Route path="/dashboard"/>)
 				},
 				err => {
-					// this.setState({ loading: false });
+					// if error, set error message and stop loading animation
 					this.props.setLoading(false);
 					this.setState({ serverError: true });
 					console.log("Error logging in: ", err);
