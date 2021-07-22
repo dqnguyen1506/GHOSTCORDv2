@@ -15,6 +15,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { AnimatedList } from 'react-animated-list';
+import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -91,6 +92,12 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                 //     chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
                                 //         : chat.name;
                                 // create a list item for each chat by mapping over the chatsList passed in from props
+
+                                // messages sent by all recipients
+                                var recipientsMessages = chat.messages.filter(message => message.senderUsername != state.user.username)
+                                var chatPreviewColor = userHasRead(chat) 
+                                                        ? ""
+                                                        : "red";
                                 return (
                                     // create a listitem for each chat the user is in
                                     <div key={index}>
@@ -140,8 +147,14 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                             </div>
                                                         </Grid>
                                                         <Grid item xs>
-                                                            <div style={{fontSize:14}}>
-                                                                    {chatsList.indexOf(chat)}
+                                                            <div style={{fontSize:14, color: `${chatPreviewColor}`}}>
+                                                                    {/* {chatsList.indexOf(chat)} */}
+                                                                    {recipientsMessages.length > 0 
+                                                                        ? recipientsMessages[recipientsMessages.length - 1].message === "New Chat Member Alert" 
+                                                                            ? `${recipientsMessages[recipientsMessages.length - 1].message} has been added!`
+                                                                            :  `${recipientsMessages[recipientsMessages.length - 1].senderUsername}: ${recipientsMessages[recipientsMessages.length - 1].message}`
+                                                                        : "No Messages Sent Yet!"
+                                                                    }
                                                                 </div>
                                                         </Grid>
                                                     </Grid>
@@ -151,7 +164,7 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                     {userHasRead(chat) 
                                                         ? null 
                                                         : (
-                                                            <FiberManualRecordIcon style={{float:'right'}}/>
+                                                            <NotificationImportantIcon style={{color: 'red', float:'right'}}/>
                                                     )}
                                                 </Grid>
                                             </Grid>
@@ -185,16 +198,16 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                 <Collapse in={openDirectChat} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {directChats.map((chat, index) => {
-                            // var chatType = 
-                            //     chat.type === "groupchat" ? "groupchat" : "1on1";
+                        
                             var avatar = chat.users.filter((email) => email != state.user.email);
-                                // chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-                                //     : chat.avatar;
+                              
                             var username = chat.usernames.filter((email) => email != state.user.username);
                             var userEmail = chat.users.filter((email) => email != state.user.email);
-
-                                // chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-                                //     : chat.name;
+                            // filter out all messages sent by recipient
+                            var recipientMessages = chat.messages.filter(message => message.senderUsername != state.user.username)
+                            var chatPreviewColor = userHasRead(chat) 
+                                                        ? ""
+                                                        : "red";
                             // create a list item for each chat by mapping over the chatsList passed in from props
                             return (
                                 // create a listitem for each chat the user is in
@@ -245,9 +258,13 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                         </div>
                                                     </Grid>
                                                     <Grid item xs>
-                                                        <div style={{fontSize:14}}>
+                                                        <div style={{fontSize:14, color: `${chatPreviewColor}`}}>
                                                             {/* {chatsList.indexOf(chat)} */}
-                                                            {userEmail}
+                                                            {/* {userEmail} */}
+                                                            {recipientMessages.length > 0 
+                                                                        ? `${recipientMessages[recipientMessages.length-1].message}`
+                                                                        : "No Messages Sent Yet!"
+                                                            }
                                                         </div>
                                                     </Grid>
                                                 </Grid>
@@ -257,7 +274,7 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                 {userHasRead(chat) 
                                                 ? null 
                                                 : (
-                                                    <FiberManualRecordIcon style={{float:'right'}}/>
+                                                    <NotificationImportantIcon style={{color: 'red', float:'right'}}/>
                                                 )}
                                             </Grid>
                                         </Grid>
