@@ -46,7 +46,7 @@ export const GoToChatComponent = ({selectFunction, name, email, showGoToChat, cl
                 <DialogContent>
                 <DialogContentText>
                     Chat with {<strong>
-                        {`${name} ${showGoToChat} (${email})`}
+                        {`${name} (${email})`}
                     </strong>} created!
                 </DialogContentText>
                 </DialogContent>
@@ -54,8 +54,8 @@ export const GoToChatComponent = ({selectFunction, name, email, showGoToChat, cl
                 <DialogActions style={{justifyContent: "center"}}>
                     <Button 
                         style={{color: "#184A46"}}
-                        onClick={() =>{
-                            handleCommand();
+                        onClick={async () =>{
+                            await handleCommand();
                             dispatch({
                                 type: "SET_SHOW_GO_TO_CHAT",
                                 payload: false,
