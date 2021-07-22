@@ -143,8 +143,8 @@ const FriendsListComponent = ({selectFunction, width}) => {
         /* if it exists go to chat */
         if (res.length === 1){
             let index = state.home.chats.indexOf(res[0]);
-            selectFunction(index);
-            dispatch({ 
+            await selectFunction(index);
+            await dispatch({ 
                 type: "SET_SELECTED_DIRECTCHATS_INDEX", 
                 payload: directChats.indexOf(res[0]) 
             });
