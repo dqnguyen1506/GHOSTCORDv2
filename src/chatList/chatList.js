@@ -117,7 +117,7 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                             </ListItemAvatar>
                                             <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} />
                                             {userHasRead(chat) ? null : (
-                                                <FiberManualRecordIcon  />
+                                                <FiberManualRecordIcon color='primary' />
                                             )}
                                         </ListItem>
                                         </List>
@@ -182,7 +182,7 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                         </ListItemAvatar>
                                         <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} />
                                         {userHasRead(chat) ? null : (
-                                            <FiberManualRecordIcon  />
+                                            <FiberManualRecordIcon color={"primary"} />
                                         )}
                                     </ListItem>
                                 </div>
