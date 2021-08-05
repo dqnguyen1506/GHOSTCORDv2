@@ -67,6 +67,7 @@ Node.js, NPM, React
     2.0.0: UI overhaul on all pages, Direct message, animations, notifications, user status, 
            and chat information functionalities added 
     2.0.1: Emojis added
+    2.1: Group chat/direct messages list now show chat preview. UI changes to to new message(s) alert.
     
 ## Future Features to Be Added
 1. Message seen/read
