@@ -53,7 +53,7 @@ Node.js, NPM, React
 
 ## Previews:
 ![login page (v3)](https://user-images.githubusercontent.com/44854519/125171256-1039bd80-e168-11eb-895a-f933bd4a3095.png)
-![homepage v3](https://user-images.githubusercontent.com/44854519/125171156-90135800-e167-11eb-8c68-347aa278a002.png)
+![homepage v4](https://user-images.githubusercontent.com/44854519/128401837-cb72e235-de39-43de-acf3-8bce4694f084.png)
 ![giphy](https://user-images.githubusercontent.com/44854519/125171100-3579fc00-e167-11eb-83f3-cb42ab29d202.gif)
 ![homepage animation](https://user-images.githubusercontent.com/44854519/125171106-40349100-e167-11eb-9552-85ed6aff4366.gif)
 ![upload animation](https://user-images.githubusercontent.com/44854519/125171111-4a568f80-e167-11eb-99db-e0a743ae7d29.gif)
