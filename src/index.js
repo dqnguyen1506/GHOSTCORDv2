@@ -3,9 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
-import HomePageComponent from "./homepage/homepage";
-import SignUpComponent from "./signup/SignUpForm";
-import DashboardComponent from "./dashboard/dashboard";
+import LoginPageComponent from "./LoginPage/LoginPage";
 import HomeComponent from "./groupchat/Home";
 import {ProfileComponent} from "./profile/profile";
 import EditProfileComponent from "./profile/editProfile";
@@ -16,9 +14,6 @@ import VideoChatComponent from "./video/videochat";
 import { GlobalProvider } from "./state/State";
 import { GlobalContext } from "./state/State";
 import { auth } from "./config/fire";
-import {
-    Slide,
-} from "@material-ui/core";
 
 const RoutingComponent = () => {
     const { state, dispatch } = useContext(GlobalContext);
@@ -68,9 +63,9 @@ const RoutingComponent = () => {
             <div id="routing-container">
                 {/*redirect to dashboard if logged in, otherwise redirect to login*/}
                 <Redirect exact from="/" to={state.user.auth? "/dashboard" : "/login"} />
-                <Route exact path="/" component={HomePageComponent}></Route>
-                <Route path="/login" component={HomePageComponent}></Route>
-                <Route path="/signup" component={HomePageComponent}></Route>
+                <Route exact path="/" component={LoginPageComponent}></Route>
+                <Route path="/login" component={LoginPageComponent}></Route>
+                <Route path="/signup" component={LoginPageComponent}></Route>
                 <Route
                     path="/dashboard"
                     render={({ history }) => (
