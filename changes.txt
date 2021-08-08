@@ -1,9 +1,0 @@
-CHANGES (4/15):
-Home.js
-ChatAccept.js
-ChatsList.js
-
-(4/17):
-State.js
-Home.js
-Reducer.js
