@@ -29,8 +29,8 @@ import PeopleIcon from "@material-ui/icons/People";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link, withRouter } from "react-router-dom";
-import fire , {firestore} from "../config/fire";
-import { GlobalContext } from "../state/State";
+import fire , {firestore} from "../../api-config/fire";
+import { GlobalContext } from "../../global-context/State";
 
 const drawerWidth = 240;
 
@@ -240,7 +240,7 @@ export default function PersistentDrawerRight({ history}) {
                             <img
                                 height="50px"
                                 width="50px"
-                                src={require("../logo/logo.png")}
+                                src={require("../../assets/logo/logo.png")}
                                 alt="Ghostcord"
                                 className={classes.logo}
                             />

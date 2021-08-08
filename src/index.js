@@ -3,17 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
-import LoginPageComponent from "./LoginPage/LoginPage";
-import HomeComponent from "./groupchat/Home";
-import {ProfileComponent} from "./profile/profile";
-import EditProfileComponent from "./profile/editProfile";
-import FriendsComponent from "./friends/friends";
-import AboutComponent from "./about/about";
-import WhiteBoardComponent from "./whiteboard/whiteboard";
-import VideoChatComponent from "./video/videochat";
-import { GlobalProvider } from "./state/State";
-import { GlobalContext } from "./state/State";
-import { auth } from "./config/fire";
+import LoginPageComponent from "./components/login/LoginPage";
+import HomeComponent from "./components/groupchat/Home";
+import {ProfileComponent} from "./components/profile/profile";
+import EditProfileComponent from "./components/profile/editProfile";
+import FriendsComponent from "./components/friends/friends";
+import AboutComponent from "./components/about/about";
+import WhiteBoardComponent from "./components/whiteboard/whiteboard";
+import VideoChatComponent from "./components/video/videochat";
+import { GlobalProvider } from "./global-context/State";
+import { GlobalContext } from "./global-context/State";
+import { auth } from "./api-config/fire";
 
 const RoutingComponent = () => {
     const { state, dispatch } = useContext(GlobalContext);
