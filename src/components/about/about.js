@@ -11,11 +11,13 @@ import {
 } from "@material-ui/core";
 
 class AboutComponent extends Component {
+    // A small section describing the application
     render() {
         const { classes } = this.props;
         return (
             <div style={{overflow:'hidden'}} className="">
                 <NavBarComponent history={this.props.history} />
+                {/* text animation sliding in from left */}
                 <Slide timeout={{enter: '500ms'}} direction="left" in={true} mountOnEnter unmountOnExit>
                     <div className="our_story">
                         <h2>Our Story</h2>
@@ -33,6 +35,7 @@ class AboutComponent extends Component {
                         </p>
                     </div>
                 </Slide>
+                {/* text animation sliding in from right */}
                 <Slide timeout={{enter: '500ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
                     <div className="founders">
                         <h2>The Founders</h2>
@@ -48,7 +51,7 @@ class AboutComponent extends Component {
                         </div>
                     </div>
                 </Slide>
-
+                {/* text animation sliding in from left */}
                 <Slide timeout={{enter: '500ms'}} direction="left" in={true} mountOnEnter unmountOnExit>
                     <div className="contact">
                         <h2>Contact Us</h2>
@@ -65,39 +68,6 @@ class AboutComponent extends Component {
                         </div>
                     </div>
                 </Slide>
-
-                <div>
-                    {/* <Grid container spacing={2}>
-						
-						<Grid item xs={12}>
-							<Card className={classes.title} >The Founders</Card>
-						</Grid>
-						<Grid item xs={3}>
-							<Card className={classes.card}>Steven Chung</Card>
-						</Grid>
-						<Grid item xs={3}>
-							<Card className={classes.card}>Henry Hong</Card>
-						</Grid>
-						<Grid item xs={3}>
-							<Card className={classes.card}>Dung Nguyen</Card>
-						</Grid>
-						<Grid item xs={3}>
-							<Card className={classes.card}>Matthew Szeto</Card>
-						</Grid>
-
-						<Grid item xs={12}>
-							<Card className={classes.title}>Contact Us</Card>
-						</Grid>
-						<Grid item xs={12}>
-							<Card className={classes.card}>
-								<p>Email:
-									<a className={classes.a} href=""> ghostcord@gmail.com</a>
-								</p>
-								<p>Phone: 453-528-2188</p>
-							</Card>
-						</Grid>
-					</Grid> */}
-                </div>
             </div>
         );
     }
