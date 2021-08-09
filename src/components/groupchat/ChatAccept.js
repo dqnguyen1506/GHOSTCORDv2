@@ -80,20 +80,6 @@ const acceptInvite = async (chat, email, setAcceptError, username) => {
             })
             .then(() => {});
         });
-
-    //   if (inviteEmail !== undefined) {
-    //     await firestore
-    //       .collection("chats")
-    //       .doc(chats.find(e => e.name === selectedChat).id)
-    //       .update({
-    //         invited: firebase.firestore.FieldValue.arrayUnion(inviteEmail)
-    //       })
-    //       .catch(err => {
-    //         console.log("[ChatInvite] Error ", err);
-    //         return;
-    //       });
-    //     setInviteError("Invite sent!");
-    //   }
     setAcceptError("");
 };
 
@@ -107,19 +93,6 @@ const declineInvite = async (chat, email, setAcceptError) => {
             console.log("[ChatAccept] ", err);
             setAcceptError(err);
         });
-    //   if (inviteEmail !== undefined) {
-    //     await firestore
-    //       .collection("chats")
-    //       .doc(chats.find(e => e.name === selectedChat).id)
-    //       .update({
-    //         invited: firebase.firestore.FieldValue.arrayUnion(inviteEmail)
-    //       })
-    //       .catch(err => {
-    //         console.log("[ChatInvite] Error ", err);
-    //         return;
-    //       });
-    //     setInviteError("Invite sent!");
-    //   }
 };
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -129,9 +102,6 @@ const useStyles = makeStyles((theme) => ({
         color:'#89A18F',
         marginLeft: 0
       },
-      // '& label.Mui-focused': {
-      //   color: '#184A46',
-      // },
       "& .MuiInputBase-root": {
         color: "green",
       },
@@ -176,10 +146,6 @@ export const ChatAcceptComponent = ({ showChatAccept, closeChatAccept, email, us
             .onSnapshot((result) => {
                 let chats = result.docs.map((doc) => doc.data());
                 setInvitedChats(chats);
-                // dispatch({
-                //     type: "SET_CHAT_INVITE_COUNT",
-                //     payload: chats.length,
-                // });
             });
     }, [email]);
 
@@ -220,8 +186,6 @@ export const ChatAcceptComponent = ({ showChatAccept, closeChatAccept, email, us
                 Accept/decline invites
             </Button>
         </Slide>
-            
-            {/* <DialogTitle>Accept or decline chat invites</DialogTitle> */}
             {invitedChats.length === 0 ? (
                 <Slide timeout={{enter: '1400ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
                     <DialogContentText>You have no invites.</DialogContentText>

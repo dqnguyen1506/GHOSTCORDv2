@@ -118,9 +118,6 @@ const sendInvite = async (
       '& p':{                 //color of helper text
         color:'#89A18F',
       },
-    //   '& label.Mui-focused': { //color of input label when focused
-    //     color: 'black',
-    //   },
       "& .MuiInputBase-root": { //color of input
         color: "green",
       },
@@ -181,11 +178,6 @@ export const ChatInvite = ({
     const classes = useStyles();
     return (
         <Dialog 
-            // PaperProps={{
-            //     style: {
-            //         backgroundColor: "#89A18F"
-            //     },
-            // }}
             TransitionProps={zoomProps}
             TransitionComponent={Transition}
             keepMounted
@@ -201,15 +193,6 @@ export const ChatInvite = ({
                     variant="circular"
                 />
             </Slide>
-            {/* <img
-                style={{borderRadius: "50%"}}
-                height="25%"
-                width="25%"
-                src={require("../logo/logo.jpg")}
-                alt="Ghostcord"
-                               
-            /> */}
-            {/* <Divider style={{backgroundColor: "green", width:"100%", alignSelf: "center"}}/> */}
             <Slide timeout={{enter: '1200ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
                 <Button
                     variant="outlined"
@@ -226,8 +209,6 @@ export const ChatInvite = ({
                     Invite a user to your group
                 </Button>
             </Slide>
-            {/* <DialogTitle style={{borderStyle:"" color:"#184A46", textAlign: "center"}}>Invite a user to your group</DialogTitle> */}
-            {/* <Divider style={{backgroundColor: "green", width:"100%", alignSelf: "center"}}/> */}
             <DialogContent style={{overflow:'hidden'}} >
                 <form className={classes.root} noValidate> 
                     <ThemeProvider theme={theme}> 

@@ -167,28 +167,6 @@ const HomeComponent = ({ history }) => {
                         payload: result.docs.map((doc) => doc.data()),
                     });
                 });
-            // firestore
-            //     .collection("users")
-            //     .get()
-            //     .then((res) => {
-            //         let temp = state.home.loadedAvatars;
-            //         let temp2 = state.home.statuses;
-            //         temp = res.docs.map((doc) => {
-            //             if(temp[doc.data().email] != doc.data().avatar){
-            //                 temp[doc.data().email] = doc.data().avatar;
-            //             }
-            //             temp2[doc.data().email] = doc.data().status;
-            //         });                   
-            //         dispatch({
-            //             type: "SET_AVATARS",
-            //             payload: temp,
-            //         });
-            //         dispatch({
-            //             type: "SET_STATUSES",
-            //             payload: temp2,
-            //         });
-            //     });
-
             /* set user avatars, user status, friend request count, 
                 notfication alert, and user friends */
             var unsubscribe4 = firestore
@@ -215,57 +193,9 @@ const HomeComponent = ({ history }) => {
                             type: "SET_STATUSES",
                             payload: temp2,
                         });
-                        // if(change.doc.data().email === state.user.email && change.doc.data().received != null){
-                        //     /* update friend request count */
-                        //     if(state.home.friendRequestsCount != change.doc.data().received.length){
-                        //         dispatch({
-                        //             type: "SET_FRIEND_REQUEST_COUNT",
-                        //             payload: change.doc.data().received.length,
-                        //         });
-                        //     }
-                        //     /* update friend request alert */
-                        //     if (change.doc.data().received.length > 0){
-                        //         dispatch({
-                        //             type: "SET_SHOW_REQUEST_NOTIFICATION",
-                        //             payload: '',
-                        //         });
-                        //     }else{
-                        //         dispatch({
-                        //             type: "SET_SHOW_REQUEST_NOTIFICATION",
-                        //             payload: 'none',
-                        //         });
-                        //     }
-                        //     /* update user friends */
-                        //     var friends = res.docs[0].data().friends;
-                        // var loopData = ''
-                        // for(var x in friends){
-                        //     const email = friends[x].email;
-                        //     loopData += `${email} `
-                        // }
-                        // dispatch({ 
-                        //     type: "SET_FRIENDS", 
-                        //     payload: loopData.split(" ")
-                        // });
-                        // }
                     });
                     
                 });
-
-            /* UNCOMMENT this if real time status update is needed */
-            // var unsubscribe4 = firestore
-            //     .collection("users")
-            //     .onSnapshot((res) => {
-            //         let temp = state.home.loadedAvatars;
-            //         let temp2 = state.home.statuses;
-            //         temp = res.docs.map((doc) => {
-            //             temp2[doc.data().email] = doc.data().status;
-            //         });                   
-            //         dispatch({
-            //             type: "SET_STATUSES",
-            //             payload: temp2,
-            //         });
-            //     });
-
             /* whenever there is a new chat invite (database update detected)
                 display a notification*/
             var unsubscribe2 = firestore
@@ -294,14 +224,6 @@ const HomeComponent = ({ history }) => {
                                 payload: res.docs[0].data().name,
                             });
                         }
-                        // // update email
-                        // if(res.docs[0].data().email !== state.user.email){
-                        //     dispatch({
-                        //         type: "SET_EMAIL",
-                        //         payload: res.docs[0].data().email,
-                        //     });
-                        // }
-                        //setReceivedCount(res.docs[0].data().received.length);
                         if(res.docs[0].data().friends != null){
                             dispatch({
                                 type: "SET_FRIEND_REQUEST_COUNT",
@@ -340,15 +262,11 @@ const HomeComponent = ({ history }) => {
                                 payload: []
                             });
                         }
-                        
                     }
-                    
-                    
                 });
             return () => {
                 unsubscribe1();
                 unsubscribe2();
-                // unsubscribe3();
                 unsubscribe4();
             };
         }
@@ -385,7 +303,6 @@ const HomeComponent = ({ history }) => {
                 type: "SET_SHOW_CHAT_CREATE", 
                 payload: false 
             });
-            //this.setState({ showCreateChat: false });
         } else {
             console.log("room not created");
         }
@@ -421,7 +338,6 @@ const HomeComponent = ({ history }) => {
                 usersHasRead: firebase.firestore.FieldValue.arrayUnion({
                     email: state.user.email, hasRead: true, chatIsSelected: true})
             });
-            
             /* PREVIOUS SELECTED CHAT HANDLER */
             /* after user selects a new chat, update chatIsSelected of previous chat
             (to false) */
@@ -436,7 +352,6 @@ const HomeComponent = ({ history }) => {
                         email: state.user.email, hasRead: true, chatIsSelected: false})
                 });
             };
-
             batch.commit()
                 .then(() => console.log('Success!'))
                 .catch(err => console.error('Failed!', err));
@@ -539,10 +454,7 @@ const HomeComponent = ({ history }) => {
     const classes = useStyles();
     return (
         <>
-            <AlertComponent
-                // type='logged in'
-                // message='Successfully logged in.'    
-            />
+            <AlertComponent />
             {console.log("STATEUSERNAME: ", state.user.name)}
             <div style={{
                     position: 'fixed',
@@ -567,9 +479,6 @@ const HomeComponent = ({ history }) => {
                     width: "100vw",
                     display: "flex",
                     overflowY: 'hidden'
-                    // borderWidth: 1,
-                    // borderStyle: "solid",
-                    // backgroundColor: this.props.theme.backgroundColor
                 }}
             >
                 {/* Left Section (ChatList) */}
@@ -579,11 +488,6 @@ const HomeComponent = ({ history }) => {
                         height: "93vh",
                         width: 326,
                         minWidth: 326,
-                        // width:'17vw',
-                        // width: "325px"
-                        // borderWidth: 1,
-                        // borderStyle: "solid",
-                        // borderColor: "black",
                         borderRight:'1px solid grey',
                         background:
                             "linear-gradient(0deg, rgba(137,161,143,1) 100%, rgba(253,187,45,1) 100%)",
@@ -629,11 +533,6 @@ const HomeComponent = ({ history }) => {
                                                 </StyledBadge>
                                             }
                                         >
-                                            {/* {
-                                                <div style={{fontSize: 30}}>
-                                                    {state.user.username}
-                                                </div>
-                                            } */}
                                         {state.user.username}
                                         </Button>
                                     </Link>
@@ -766,20 +665,13 @@ const HomeComponent = ({ history }) => {
                                 </Grid>
                             </Slide>
                         </Grid>
-                    
-                    {/*separator line */}
-                    
                     {/* Chatroom list (ChatList) + Friend list (FriendList) */}
                     <Slide timeout={{enter: '1000ms'}} direction="up" in={true} mountOnEnter unmountOnExit>
                     <div
                         style={{
-                            // overflowX:"hidden",
                             width: "100%",
                             height: "78%",
                             scrollbarColor: "#424242 #89A18F"
-                            //paddingTop: "100px"
-                            // borderWidth: 1,
-                            // borderStyle: "solid",
                         }}
                     >
                         <AppBar 
@@ -821,7 +713,6 @@ const HomeComponent = ({ history }) => {
                             <TabPanel value={value} index={1} dir={theme.direction}>
                                 <FriendsListComponent
                                     selectFunction={selectChat}
-                                    // width="16vw"
                                     width='100%'  
                                 />
                             </TabPanel>
@@ -841,7 +732,6 @@ const HomeComponent = ({ history }) => {
                         username={state.user.username}
                         avatars={state.home.loadedAvatars}
                         roomName={state.home.chats[state.home.selectedChat]}
-
                     />
                 )}
             </div>

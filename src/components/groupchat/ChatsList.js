@@ -56,15 +56,11 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
         }
         return hasRead
     };
-
-    // if (chatsList.length > 0) {
-        // If the user is in at least one chat
         var groupchats = chatsList.filter((chat) => chat.type ==='groupchat');
         var directChats = chatsList.filter((chat) => chat.type ==='1on1');
         return (
             <List
                 style={{margin:'auto'}}
-                // style={{margin:'auto',overflow:'auto', height: '50vh', scrollbarWidth: 'thin'}}
                 component="nav"
             >
                 {/* group chats */}
@@ -76,28 +72,13 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                     {openGroupChat ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openGroupChat} timeout="auto" unmountOnExit>
-                    {/* <List component="div" disablePadding>
-                        <ListItem button style={{paddingLeft: '2vw'}}>
-                            <ListItemText primary="Starred" />
-                        </ListItem>
-                    </List> */}
                     <List component="div" disablePadding>
                         {groupchats.map((chat, index) => {
-                                // var chatType = 
-                                //     chat.type === "groupchat" ? "groupchat" : "1on1";
-                                // var avatar = 
-                                //     chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-                                //         : chat.owner;
-                                // var chatName = 
-                                //     chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-                                //         : chat.name;
-                                // create a list item for each chat by mapping over the chatsList passed in from props
-
                                 // messages sent by all recipients
                                 var recipientsMessages = chat.messages.filter(message => message.senderUsername != state.user.username)
                                 var chatPreviewColor = userHasRead(chat) 
-                                                        ? ""
-                                                        : "red";
+                                    ? ""
+                                    : "red";
                                 return (
                                     // create a listitem for each chat the user is in
                                     <div key={index}>
@@ -168,23 +149,11 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                     )}
                                                 </Grid>
                                             </Grid>
-                                                
-                                            {/* <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} /> */}
-                                            
-                                            {/* <div style={{marginLeft: 100}}>
-                                            {userHasRead(chat) ? null : (
-                                                <FiberManualRecordIcon/>
-                                            )}
-                                            </div> */}
                                         </ListItem>
                                     </div>
                                 );
                             })}
                     </List>
-                    {/* <List component="div" disablePadding>
-                        {console.log("LOADEDAVATARS:", loadedAvatars)}
-                        
-                    </List> */}
                 </Collapse>
 
                 {/* direct messages */}
@@ -206,8 +175,8 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                             // filter out all messages sent by recipient
                             var recipientMessages = chat.messages.filter(message => message.senderUsername != state.user.username)
                             var chatPreviewColor = userHasRead(chat) 
-                                                        ? ""
-                                                        : "red";
+                                ? ""
+                                : "red";
                             // create a list item for each chat by mapping over the chatsList passed in from props
                             return (
                                 // create a listitem for each chat the user is in
@@ -278,23 +247,6 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                                                 )}
                                             </Grid>
                                         </Grid>
-                                        
-                                        {/* <ListItemText 
-                                            style={{overflow:'hidden'}}
-                                            primary={chatName} 
-                                            secondary={chatsList.indexOf(chat)}   
-                                        /> */}
-                                        {/* <div style={{ overflow: "hidden", display:'block' ,textOverflow: "ellipsis" }}>
-                                           {chatName}
-                                           <div style={{fontSize:14}}>
-                                               {chatsList.indexOf(chat)}
-                                           </div>
-                                        </div>
-                                        
-                                        
-                                        {userHasRead(chat) ? null : (
-                                            <FiberManualRecordIcon  />
-                                        )} */}
                                     </ListItem>
                                 </div>
                             );
@@ -302,66 +254,7 @@ const ChatsListComponent = ({ chatsList, selectFunction, loadedAvatars }) => {
                     </List>
                 </Collapse>
             </List>
-
-
-        //    <Collapse in={openDirectChat} timeout="auto" unmountOnExit>
-        //             <List component="div" disablePadding>
-        //                 {console.log("LOADEDAVATARS:", loadedAvatars)}
-
-        //                 {directChats.map((chat, index) => {
-        //                     var chatType = 
-        //                         chat.type === "groupchat" ? "groupchat" : "1on1";
-        //                     var avatar = 
-        //                         chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-        //                             : chat.owner;
-        //                     var chatName = 
-        //                         chat.type != "groupchat" ? chat.users.filter((email) => email != state.user.email)
-        //                             : chat.name;
-        //                     // create a list item for each chat by mapping over the chatsList passed in from props
-        //                     return (
-        //                         // create a listitem for each chat the user is in
-        //                         <div key={index}>
-        //                             <ListItem
-        //                                 onClick={() => {
-        //                                     dispatch({ 
-        //                                         type: "SET_SELECTED_DIRECTCHATS_INDEX", 
-        //                                         payload: index 
-        //                                     });
-        //                                     dispatch({ 
-        //                                         type: "SET_SELECTED_GROUPCHATS_INDEX", 
-        //                                         payload: null 
-        //                                     });
-        //                                     selectFunction(chatsList.indexOf(chat));
-        //                                 }}
-        //                                 divider
-        //                                 button
-        //                                 selected={state.home.selectedDirectChatsIndex===index}
-        //                             >
-        //                                 <ListItemAvatar>
-        //                                     <Avatar
-        //                                         alt="Remy Sharp"
-        //                                         src={loadedAvatars[avatar]}
-        //                                     >
-        //                                         {/* {chatName.split("")[0]} */}
-        //                                     </Avatar>
-        //                                 </ListItemAvatar>
-        //                                 <ListItemText primary={chatName} secondary={chatsList.indexOf(chat)} />
-        //                                 {userHasRead(chat) ? null : (
-        //                                     <FiberManualRecordIcon  />
-        //                                 )}
-        //                             </ListItem>
-        //                         </div>
-        //                     );
-        //                 })}
-        //             </List>
-        //         </Collapse>
         );
-    // } else {
-    //     // If the user is not in any chats
-    //     return (
-    //         <div style={{ textAlign: "center" }}>You have no chatrooms!</div>
-    //     );
-    // }
 };
 
 export default ChatsListComponent;

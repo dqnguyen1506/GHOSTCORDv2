@@ -25,38 +25,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export const CreateChat = ({ closeCreateChat, showCreateChat, createChat }) => {
   const [newRoomName, setNewRoomName] = useState("");
-  // const useStyles = makeStyles({
-  //   root: {
-  //     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-  //       borderColor: "#184A46"
-  //     },
-  //     "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-  //       borderColor: "#184A46"
-  //     },
-  //     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-  //       borderColor: "#184A46"
-  //     },
-  //     "& .MuiOutlinedInput-input": {
-  //       color: "black"
-  //     },
-  //     "&:hover .MuiOutlinedInput-input": {
-  //       color: "red"
-  //     },
-  //     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-  //       color: "black"
-  //     },
-  //     "& .MuiInputLabel-outlined": {
-  //       color: "black"
-  //     },
-  //     "&:hover .MuiInputLabel-outlined": {
-  //       color: "#89A18F"
-  //     },
-  //     "& .MuiInputLabel-outlined.Mui-focused": {
-  //       color: "#89A18F"
-  //     }
-  //   }
-  // });
-
   const zoomProps = {
     mountOnEnter: true,
     unmountOnExit: true,
@@ -71,9 +39,6 @@ export const CreateChat = ({ closeCreateChat, showCreateChat, createChat }) => {
         color:'#89A18F',
         marginLeft: 0
       },
-      // '& label.Mui-focused': {
-      //   color: '#184A46',
-      // },
       "& .MuiInputBase-root": {
         color: "green",
       },
@@ -111,7 +76,6 @@ export const CreateChat = ({ closeCreateChat, showCreateChat, createChat }) => {
   return (
     <div>
       <Dialog
-        //style={{backgroundColor: "transparent"}}
         keepMounted
         open={showCreateChat}
         onClose={closeCreateChat}
@@ -144,7 +108,6 @@ export const CreateChat = ({ closeCreateChat, showCreateChat, createChat }) => {
           </Button>    
         </Slide>
         <Slide timeout={{enter: '1400ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
-        {/* <DialogTitle style={{color:"#184A46", textAlign: "center"}} id="form-dialog-title">Create Chatroom</DialogTitle> */}
           <DialogContent style={{overflow:'hidden'}}>
             <form className={classes.root} noValidate>
               <ThemeProvider theme={theme}>
@@ -156,7 +119,6 @@ export const CreateChat = ({ closeCreateChat, showCreateChat, createChat }) => {
                 type="email"
                 margin="dense"
                 type="email"
-                //fullWidth
                 helperText="* Enter your new group chat name *"
                 onChange={e => setNewRoomName(e.target.value)}
             />

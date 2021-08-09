@@ -252,12 +252,6 @@ const ChatViewComponent = ({ chat, avatars, email, username }) => {
                     type: "SET_SHOW_UPLOAD_INFO",
                     payload: true,
                 });
-                // if(!showLogo){
-                // await setShowLogo(true);
-                // // }
-                // // if(showComplete){
-                // await setShowComplete(false);
-                // }
                 console.log("updating picture");
                 await uploadTask.on(
                     "state_changed",
@@ -285,20 +279,9 @@ const ChatViewComponent = ({ chat, avatars, email, username }) => {
                             });
                     }
                 );
-        
-                // alert("attachment sent!");
             }
-        } else {
-            
-        }
-        // await dispatch({
-        //     type: "SET_SHOW_UPLOAD_INFO",
-        //     payload: true,
-        // });
+        } 
     }
-    const imageClick = (name) => {
-        alert(`this is ${name}`)
-    } 
 const color = teal[800];
 const theme = createMuiTheme({
   palette: {
@@ -341,43 +324,27 @@ const theme = createMuiTheme({
             :   'grey'
             
         return (
-            // <Slide timeout={{enter: '0ms'}} direction="down" in={true} mountOnEnter unmountOnExit>
             <div
                 style={{
-                    // height: 990,
                     height:'93vh',
                     width:'83vw',
-                    // width: "100%",
-                    // borderWidth: 1,
-                    // borderStyle: "solid",
                     alignSelf: "flexStart",
                     display:'flex',
                     flexDirection: 'column',
                     overflow:'hidden',
-                    // overflowY:'auto',
-                    // overflowX:'hidden',
                     position:'relative',
                     margin:'auto',
-                    // backgroundColor: "white",
-                //    borderColor: "red",
                 }}
             >
                 {/*Display selected group chat info*/}
                 <Slide timeout={{enter: '1000ms'}} direction="down" in={true} mountOnEnter unmountOnExit>
                     <div 
                         style ={{
-                            // width: "83vw",
                             display:'flex',
                             flexDirection: 'row',
                             alignItems:'center',
-                            // width: 'auto',
-                            // minWidth: 100,
-                            // overflowX: "hidden",
-                            // overflowY: "hidden",
                             height: 70,
-                            // height: '7vh',
                             backgroundColor: "#89a18f",
-                            //textAlign: 'center',
                             fontSize: '20px',
                             color: '#444544',
                             borderBottom:'1px solid grey',
@@ -389,7 +356,6 @@ const theme = createMuiTheme({
                             direction='row'
                             justify='center'
                             alignItems='center'
-                            // style={{margin: 'auto',}}
                         >
                             <Grid item xs={6} >
                                 {chat.type === "1on1"
@@ -459,34 +425,6 @@ const theme = createMuiTheme({
                             </Grid>
 
                             <Grid item xs={1} style={{textAlign: 'right', paddingRight: "1%"}}>
-                                    {/* <PopupState variant="popover" popupId="popup-info">
-                                    {(popupState) => (
-                                        <React.Fragment>
-                                            <IconButton {...bindTrigger(popupState)}>
-                                                <InfoIcon style={{fontSize:30}}> 
-                                                </InfoIcon>
-                                            </IconButton>
-                                            <Menu {...bindMenu(popupState)}>
-                                                <ListItem onClick={popupState.close}>
-                                                    <ListItemIcon style={{minWidth: '40px'}}>
-                                                        <PersonIcon />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary='Members' />
-                                                </ListItem>
-                                                {chat.users.map((user, ind) => {
-                                                    return (
-                                                        <div key={ind}>
-                                                            <ListItem onClick={popupState.close}>{user}</ListItem>
-                                                        </div>
-                                                    );
-                                                })}
-                                                
-                                            </Menu>
-                                            
-                                        </React.Fragment>
-                    
-                                    )}
-                                </PopupState> */}
                                 <IconButton 
                                     onClick={() => {
                                         /* show the chatInfo component 
@@ -507,45 +445,6 @@ const theme = createMuiTheme({
                                 
                             </Grid>
                         </Grid>
-                        {/* {<Avatar 
-                            alt="Remy Sharp"
-                            src={require("../logo/logo.jpg")}
-                            className={classes.large}
-                            variant="circular"
-                        />} */}
-
-                        {/*selected group chat name*/}
-                        {/* {chatName} */}
-
-                        {/*display group chat members*/}
-                        {/* <PopupState variant="popover" popupId="popup-info">
-                            {(popupState) => (
-                                <React.Fragment>
-                                    <IconButton {...bindTrigger(popupState)}>
-                                        <InfoIcon style={{fontSize:18}}> 
-                                        </InfoIcon>
-                                    </IconButton>
-                                    <Menu {...bindMenu(popupState)}>
-                                        <ListItem onClick={popupState.close}>
-                                            <ListItemIcon style={{minWidth: '40px'}}>
-                                                <PersonIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary='Members' />
-                                        </ListItem>
-                                        {chat.users.map((user, ind) => {
-                                            return (
-                                                <div key={ind}>
-                                                    <ListItem onClick={popupState.close}>{user}</ListItem>
-                                                </div>
-                                            );
-                                        })}
-                                        
-                                    </Menu>
-                                    
-                                </React.Fragment>
-            
-                            )}
-                        </PopupState> */}
                     </div>
                 </Slide>
                 {/* chat */}
@@ -554,17 +453,11 @@ const theme = createMuiTheme({
                         id="chatview-container"
                         style={{
                             height: "80vh",
-                            // width: "83vw",
                             overflowY: "scroll",
                             scrollbarWidth: 'thin',
-                            // overflowX: "hidden",
                             paddingLeft: "10px",
                             borderRight: '1px solid gray',
-                            // borderLeft:'1px solid gray',
                             backgroundColor:'white',
-                            // borderWidth: 3,
-                            // borderStyle: "outset",
-                            // borderColor: "blue",
                         }}
                     >
                         {/* chat messages */}
@@ -673,7 +566,6 @@ const theme = createMuiTheme({
                                                         target="_blank" //open attachment in a new tab
                                                         variant="outlined" 
                                                         color="secondary"
-                                                        //className={classes.button}
                                                         startIcon={<AttachmentIcon />}
                                                     >
                                                         {msg.fileName}
@@ -747,18 +639,9 @@ const theme = createMuiTheme({
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "flex-start",
-                            // width: "83vw",
-                            // height: 'auto',
                             height: 60,
-                            // minHeight:"5%",
                             width: '100%',
-                            // minWidth: '50%',
                             backgroundColor: "white",
-                            // border:'1px solid grey',
-                            // marginTop: "1vh",
-                            // borderWidth: 3,
-                            // borderStyle: "outset",
-                            // borderColor: "purple",
                             margin:'auto',
                             alignItems:'center',
                         }}
@@ -766,7 +649,6 @@ const theme = createMuiTheme({
                         {/*Send photos */}
                         <input
                             accept="image/*"
-                            //className={classes.input}
                             id="icon-button-photo"
                             onChange={onChoosePhoto}
                             type="file"
@@ -781,7 +663,6 @@ const theme = createMuiTheme({
                         {/*Send attachment */}
                         <input
                             accept="media_type"
-                            //className={classes.input}
                             id="icon-button-attachment"
                             onChange={onChooseAttachment}
                             type="file"
@@ -835,8 +716,7 @@ const theme = createMuiTheme({
                                                 <img
                                                     style={{height: '150px', width: '150px'}}
                                                     src={images .mimi1}  
-                                                    onClick={() => sendMessage("gif", chat, email, username,5 ,"mimi1.gif")}                                      
-                                                    // onClick={() => sendMessage("message", chat, email, username,1,"")}
+                                                    onClick={() => sendMessage("gif", chat, email, username,5 ,"mimi1.gif")}   
                                                 />
                                             </a>
                                         </Grid>

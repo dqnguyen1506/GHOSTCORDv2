@@ -71,8 +71,6 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(10),
         height: theme.spacing(10),
         alignSelf: "center",
-        // marginLeft:'200%',
-        // // marginTop:'25%'
     },
     closeButton: {
         float:'right',
@@ -126,10 +124,6 @@ export const ChatInfoComponent = ({chat}) => {
         chat.type != "groupchat" 
         ? state.home.loadedAvatars[recipientEmail]
         : chat.avatar;
-    // var displaySaveButton = 
-    //     newChatName.length > 0
-    //         ?   true 
-    //         :   false
     const onChooseAvatar = async event => {
         if (event.target.files && event.target.files[0]) {
             const image = event.target.files[0]
@@ -164,7 +158,6 @@ export const ChatInfoComponent = ({chat}) => {
                             .child(image.name)
                             .getDownloadURL()
                             .then(url => {
-                                // sendMessage(url, chat, email, username,2,image.name)
                                 firestore
                                     .collection("chats")
                                     .doc(chat.id)
@@ -176,8 +169,6 @@ export const ChatInfoComponent = ({chat}) => {
                             });
                     }
                 );
-        
-                // alert("photo sent!");
             }
         }
     };
@@ -332,8 +323,6 @@ export const ChatInfoComponent = ({chat}) => {
                             borderRadius: 5, 
                             borderColor: "green", 
                             width: "80%", 
-                            // alignSelf: "center",
-                            // marginBottom: '5%',
                             marginTop:'2.5%',
                             float:'right'
                         }}    
@@ -349,11 +338,8 @@ export const ChatInfoComponent = ({chat}) => {
                         direction='row'
                         justify='center'
                         alignItems='center'
-                    // spacing={2}
                     >
                     <IconButton
-                        // style={{margin: '5% 0 0 25%'}}
-                        // size='small'
                         onClick={() => {
                             setShowTextfield(!showTextfield);
                         }}   
@@ -368,16 +354,13 @@ export const ChatInfoComponent = ({chat}) => {
                 
                 
             </Grid>
-            {/* <TextField>Hello</TextField> */}
             <DialogContent style={{overflow:'hidden'}}>
                 <form className={classes.root} noValidate>
                     <Zoom timeout={{appear:500, enter: 1000, exit:1000}} in={showTextfield} mountOnEnter unmountOnExit>
-                    {/* <ThemeProvider theme={theme}> */}
                         <Grid
                             container
                             direction='row'
                             alignItems='center'
-                            // justify='center'
                         >
                             <Grid item xs ={10}>
                                 <CssTextField
@@ -391,10 +374,7 @@ export const ChatInfoComponent = ({chat}) => {
                                     InputProps={{
                                         className: classes.input
                                     }}
-                                    //fullWidth
-                                    // helperText="* Enter your new group chat name *"
                                     onChange={e => {
-                                        // setNewChatName(e.target.value);
                                         handleInput(e.target.value)
                                     }}
                                 />
@@ -404,18 +384,14 @@ export const ChatInfoComponent = ({chat}) => {
                                     container
                                     direction='row'
                                     alignItems='center'
-                                    // justify='center'
                                 >
                                     <Zoom in={displaySaveButton} mountOnEnter unmountOnExit>
                                         <IconButton
-                                            // style={{position:'absolute', top: 220, left:'88%'}}
-                                            // style={{float:'right'}}
                                             onClick={() => {
                                                 onChooseChatName();
                                             }}   
                                         >
                                             <SaveIcon
-                                                // style={{display: `${displaySaveButton}`}}
                                                 className={classes.editButton}
                                             />
                                         </IconButton>
@@ -459,22 +435,6 @@ export const ChatInfoComponent = ({chat}) => {
                             primary='Members' 
                             style={{color:'#184A46', fontSize:20}}
                         />
-                        {/* <Button
-                            variant="outlined"
-                            disabled
-                            style={{
-                                fontSize: 20,
-                                color: "#184A46",
-                                borderRadius: 5, 
-                                borderColor: "green", 
-                                width: "80%", 
-                                alignSelf: "center",
-                                marginBottom: '5%',
-                                border: '2px solid green'
-                            }}    
-                        >
-                            Members
-                        </Button> */}
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -495,9 +455,6 @@ export const ChatInfoComponent = ({chat}) => {
                                 <Grid
                                     container
                                     direction='row'
-                                    // justify='center'
-                                    // alignItems='center'
-                                    // spacing={3}
                                 >
                                     <Grid style={{marginBottom:'5%'}} item xs={4}> 
                                         <ListItemAvatar>
@@ -511,8 +468,7 @@ export const ChatInfoComponent = ({chat}) => {
                                     </Grid>
                                     <Grid 
                                         item 
-                                        xs={7}
-                                        // style={{textIndent:'5%'}}    
+                                        xs={7}   
                                     >
                                         <ListItem>{`${user} ${admin}`}</ListItem>
                                     </Grid>
@@ -523,9 +479,6 @@ export const ChatInfoComponent = ({chat}) => {
                     })}
                 </List>
             </Grid>
-            
- 
-                
         </Dialog>   
     );
 };

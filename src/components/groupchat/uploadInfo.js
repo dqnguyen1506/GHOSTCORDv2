@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(11),
         alignSelf: "center",
         margin: "5%",
-        // marginTop:'-18%'
       },
     button: {
         fill:'#184A46'
@@ -75,7 +74,6 @@ export const UploadInfoComponent = ({
     const { state, dispatch } = useContext(GlobalContext);
     const [message, setMessage] = useState("upload completed");
     const [dialogButtonMessage, setDialogButtonMessage] = useState("confirm");
-    // const [showComplete, setShowComplete] = useState(false);
     const delay = ms => new Promise(res => setTimeout(res, ms));
     var color = showComplete 
         ?   "red" 
@@ -90,7 +88,6 @@ export const UploadInfoComponent = ({
                 setMessage("upload completed");
                 setDialogButtonMessage("confirm");
             }}
-            // onEnter={()=> setMessage("upload completed")}
             fullWidth
             maxWidth={'xs'}
             keepMounted
@@ -118,12 +115,9 @@ export const UploadInfoComponent = ({
                         borderColor: "green", 
                         width: "80%", 
                         alignSelf: "center",
-                        // position:'absolute'
                         marginTop:'9.4%',
                         marginBottom:'9%'
-                        // marginTop:`${margin}`
                     }}  
-                    // startIcon={<DoneOutlineIcon/>}  
                 >
                     {message}
                 </Button>
@@ -137,22 +131,6 @@ export const UploadInfoComponent = ({
                     variant="circular"
                 />
             </Slide>
-            {/* <Slide timeout={{enter: '1200ms'}} direction="right" in={true} mountOnEnter unmountOnExit>
-                <Button
-                    variant="outlined"
-                    disabled
-                    style={{
-                        fontSize: 17,
-                        color: "#184A46",
-                        borderRadius: 5, 
-                        borderColor: "green", 
-                        width: "80%", 
-                        alignSelf: "center"
-                    }}    
-                >
-                    Upload Information
-                </Button>
-            </Slide> */}
             <Grid 
                 container
                 direction='column'
@@ -174,7 +152,6 @@ export const UploadInfoComponent = ({
                         flexDirection='column'
                     >
                         <Typography variant="h4" component="div" color="textSecondary">{`${progress}%`}</Typography>
-                        {/* <Typography style={{marginTop:'5%', width:'40%'}} variant="subtitle" component="div" color="textSecondary">{"144-1440485_quotation-marks-hd-png-download.png"}</Typography> */}
                         <Grid
                             container
                             direction='row'
@@ -182,10 +159,7 @@ export const UploadInfoComponent = ({
                             alignItems='center'
                             style={{
                                 color: "#184A46",
-                                // borderRadius: 5, 
-                                // border: "5px solid #184A46 ", 
                                 marginBottom:'5%', 
-                                // width:'60%', 
                                 }}
                         >   
                             {/* resume button */}
@@ -237,31 +211,6 @@ export const UploadInfoComponent = ({
                 >
                     {fileName}
                 </Button>
-                {/* <Typography style={{marginTop:'5%'}} variant="subtitle" component="div" color="textSecondary">{"144-1440485_quotation-marks-hd-png-download.png"}</Typography> */}
-                {/* <Grid
-                    container
-                    direction='row'
-                    justify='center'
-                    alignItems='center'
-                    style={{
-                        color: "#184A46",
-                        borderRadius: 5, 
-                        border: "5px solid #184A46 ", 
-                        marginBottom:'5%', 
-                        width:'60%', 
-                        }}
-                >   
-                    <Grid
-                        container
-                        direction='column'
-                    >
-
-                    </Grid>
-                    <PlayCircleOutlineIcon fontSize='large' className={classes.button}/>
-                    <StopIcon fontSize='large' className={classes.button}/>
-                    <CancelOutlinedIcon fontSize='large' className={classes.button}/>
-                </Grid> */}
-                {/* <Zoom timeout={{enter: 500}} in={showComplete} mountOnEnter unmountOnExit> */}
                     <DialogActions style={{justifyContent: "center", top:'50%'}}>
                         <Button
                             style={{color: `${color}`}}
