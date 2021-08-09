@@ -7,7 +7,7 @@ import LoginPageComponent from "./components/login/LoginPage";
 import HomeComponent from "./components/groupchat/Home";
 import {ProfileComponent} from "./components/profile/profile";
 import EditProfileComponent from "./components/profile/editProfile";
-import FriendsComponent from "./components/friends/friends";
+import UsersListComponent from "./components/friends/UsersList";
 import AboutComponent from "./components/about/about";
 import WhiteBoardComponent from "./components/whiteboard/whiteboard";
 import VideoChatComponent from "./components/video/videochat";
@@ -75,7 +75,7 @@ const RoutingComponent = () => {
                 <Route
                     path="/friends"
                     render={({ history }) => (
-                        <FriendsComponent history={history} />
+                        <UsersListComponent history={history} />
                     )}
                 ></Route>
                 <Route
