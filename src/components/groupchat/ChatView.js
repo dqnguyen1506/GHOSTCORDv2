@@ -666,7 +666,7 @@ const theme = createMuiTheme({
                             id="icon-button-attachment"
                             onChange={onChooseAttachment}
                             type="file"
-                            style={{ display: 'none', }}
+                            style={{ display: 'none'}}
                         />
                         <label htmlFor="icon-button-attachment">
                             <IconButton color="primary" component="span">
